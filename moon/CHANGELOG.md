@@ -11,6 +11,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Documentation toolchain under `docs/`: per-module API references — Sphinx
+  (backend), Doxygen (base, plugin), TypeDoc (extension, app), rustdoc
+  (Tauri core) — unified by a MkDocs Material site, with a tolerant
+  one-command orchestrator (`docs/build_docs.sh` / `npm run docs`).
+
+### Changed
+
+- Minimum Python raised to 3.12 (required by the `grafeo` GrafeoDB bindings).
+
 - Project README with index, introduction, tech-stack badges, core-capability
   enumeration, and setup/run/test instructions.
 - `git/codecov.yaml` with per-module coverage flags (base, backend, extension,

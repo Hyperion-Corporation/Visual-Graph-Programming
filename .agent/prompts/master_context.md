@@ -10,7 +10,7 @@ Before answering any future requests, strictly ingest the following project gove
 
 1.  **Tech Stack**:
     -   **Base** (`base/`): C++20 core — Tree-sitter incremental parsing, code property graph construction, GrafeoDB embedded graph+vector storage, WebSocket/IPC server. Built with CMake inside the pixi environment.
-    -   **Backend** (`backend/`): Python 3.10+ (managed by `uv`) — Graph-RAG retrieval, code embeddings, OR layout optimization (stress majorization / MIP), MCP server, sidecar packaging.
+    -   **Backend** (`backend/`): Python 3.12+ (managed by `uv`) — Graph-RAG retrieval, code embeddings, OR layout optimization (stress majorization / MIP), MCP server, sidecar packaging.
     -   **Extension** (`extension/`): TypeScript VS Code extension — webview graph panel (React Flow), LSP call-hierarchy extraction, web-tree-sitter.
     -   **App** (`app/`): Tauri 2 (Rust core in `app/src-tauri/`) + React 19 + TypeScript — standalone desktop app supervising C++/Python sidecars.
     -   **Plugin** (`plugin/`): Unreal Engine 5+ C++ editor plugin — UEdGraph/Slate visual scripting over native C++.

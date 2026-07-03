@@ -24,7 +24,7 @@ release history is `moon/CHANGELOG.md`.
 | Path | Module | Stack | Env / build |
 | --- | --- | --- | --- |
 | `base/` | Parsing/graph core: tree-sitter, AST→graph extraction, GrafeoDB ingest, query + WebSocket server, stable C API | C++20 | `pixi.toml` + `base/CMakeLists.txt` — `pixi run configure/build/test` |
-| `backend/` | Intelligence sidecar: embeddings, Graph-RAG (RRF hybrid retrieval), OR layout engine (stress majorization/MIP), MCP server, commit diffing | Python 3.10+ | root `pyproject.toml` — `uv sync --all-extras`, `uv run pytest` |
+| `backend/` | Intelligence sidecar: embeddings, Graph-RAG (RRF hybrid retrieval), OR layout engine (stress majorization/MIP), MCP server, commit diffing | Python 3.12+ | root `pyproject.toml` — `uv sync --all-extras`, `uv run pytest` |
 | `extension/` | VS Code extension: webview graph panel (React Flow), LSP call hierarchy, web-tree-sitter | TypeScript | npm workspace — `npm run build:extension`, `npm test` |
 | `app/` | Standalone desktop app: React 19 UI + Rust core supervising C++/Python sidecars | TypeScript + Rust (Tauri 2) | npm workspace + root Cargo workspace — `npm run dev:app`, `cargo test` |
 | `plugin/` | Unreal Engine 5+ editor plugin: UEdGraph/Slate visual scripting over native C++ | C++ (UE) | UE build system (roadmap Track C) |

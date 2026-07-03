@@ -17,6 +17,9 @@
     "watch:extension": "npm run watch --workspace=extension",
     "package:extension": "npm run package --workspace=extension",
     "test": "npm run test --workspaces --if-present",
+    "docs": "bash docs/build_docs.sh",
+    "docs:extension": "npm run docs --workspace=extension",
+    "docs:app": "npm run docs --workspace=app",
     "lint": "npm run lint --workspaces --if-present",
     "format": "npm run format --workspaces --if-present",
     "check-types": "npm run check-types --workspaces --if-present"

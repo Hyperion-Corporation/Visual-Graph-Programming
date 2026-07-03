@@ -1,0 +1,42 @@
+# Doxygen configuration for the VGP Unreal Engine plugin (plugin/).
+# Build with: doxygen docs/plugin/Doxyfile   (run from the repo root)
+# The plugin is scaffolded in roadmap step C1; until then this produces an
+# empty (but valid) reference.
+
+PROJECT_NAME           = "VGP Unreal Engine Plugin"
+PROJECT_BRIEF          = "UEdGraph/Slate visual scripting over native C++ with round-trip text sync"
+PROJECT_NUMBER         = 0.1.0
+
+INPUT                  = plugin/Source
+OUTPUT_DIRECTORY       = docs/_build/api/plugin-doxygen
+RECURSIVE              = YES
+FILE_PATTERNS          = *.h *.hpp *.cpp
+EXCLUDE_PATTERNS       = */Intermediate/* */Binaries/* */ThirdParty/*
+
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = NO
+WARN_IF_UNDOCUMENTED   = YES
+QUIET                  = YES
+
+# Unreal macro handling — expand reflection macros to keep signatures readable.
+MACRO_EXPANSION        = YES
+EXPAND_ONLY_PREDEF     = YES
+PREDEFINED             = UCLASS()= \
+                         USTRUCT()= \
+                         UENUM()= \
+                         UINTERFACE()= \
+                         UPROPERTY()= \
+                         UFUNCTION()= \
+                         GENERATED_BODY()= \
+                         GENERATED_UCLASS_BODY()= \
+                         "UE_API=" \
+                         "VGPPLUGIN_API="
+
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+GENERATE_LATEX         = NO
+GENERATE_TREEVIEW      = YES
+HTML_COLORSTYLE        = AUTO_DARK
+
+HAVE_DOT               = NO
+SOURCE_BROWSER         = YES

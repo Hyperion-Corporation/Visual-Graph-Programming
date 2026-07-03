@@ -1,0 +1,18 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "name": "VGP VS Code Extension",
+  "entryPoints": ["../../extension/src"],
+  "entryPointStrategy": "expand",
+  "tsconfig": "../../extension/tsconfig.json",
+  "out": "../_build/api/extension",
+  "readme": "none",
+  "includeVersion": true,
+  "excludePrivate": true,
+  "excludeInternal": true,
+  "githubPages": false,
+  "navigationLinks": {
+    "Repository": "https://github.com/ACFHarbinger/Visual-Graph-Programming",
+    "Docs Home": "../../index.html"
+  },
+  "exclude": ["**/*.test.ts", "**/*.spec.ts", "**/node_modules/**"]
+}

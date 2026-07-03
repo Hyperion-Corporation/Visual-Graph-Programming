@@ -1,0 +1,47 @@
+# Doxygen configuration for the VGP C++ base core (base/).
+# Build with: doxygen docs/base/Doxyfile   (run from the repo root)
+# Doxygen is provided by the pixi environment: pixi run docs-base
+
+PROJECT_NAME           = "VGP C++ Base Core"
+PROJECT_BRIEF          = "Tree-sitter parsing, code property graph engine, GrafeoDB ingestion, and the stable C API"
+PROJECT_NUMBER         = 0.1.0
+
+# Paths are relative to the directory doxygen is invoked from (repo root).
+INPUT                  = base/include base/src base/README.md
+OUTPUT_DIRECTORY       = docs/_build/api/base-doxygen
+USE_MDFILE_AS_MAINPAGE = base/README.md
+RECURSIVE              = YES
+FILE_PATTERNS          = *.h *.hpp *.c *.cpp *.md
+EXCLUDE_PATTERNS       = */build/* */build-*/* */_deps/* */test/fixtures/*
+
+# Extraction — document everything public; keep internals out.
+EXTRACT_ALL            = YES
+EXTRACT_STATIC         = NO
+EXTRACT_PRIVATE        = NO
+HIDE_UNDOC_MEMBERS     = NO
+INTERNAL_DOCS          = NO
+WARN_IF_UNDOCUMENTED   = YES
+QUIET                  = YES
+
+# C++20 parsing behaviour
+BUILTIN_STL_SUPPORT    = YES
+CPP_CLI_SUPPORT        = NO
+MACRO_EXPANSION        = YES
+EXPAND_ONLY_PREDEF     = YES
+PREDEFINED             = VGP_API= "extern \"C\"="
+
+# Output — HTML only (the MkDocs umbrella links to it).
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+GENERATE_LATEX         = NO
+GENERATE_TREEVIEW      = YES
+HTML_COLORSTYLE        = AUTO_DARK
+
+# Diagrams (uses dot from graphviz if available; degrades gracefully).
+HAVE_DOT               = NO
+CLASS_GRAPH            = YES
+COLLABORATION_GRAPH    = NO
+
+# Source browsing
+SOURCE_BROWSER         = YES
+STRIP_CODE_COMMENTS    = NO

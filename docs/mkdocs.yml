@@ -1,0 +1,64 @@
+# MkDocs site configuration — the umbrella that ties all module docs together.
+# Build the full site (module generators + this site) with: bash docs/build_docs.sh
+# Serve just the narrative site during editing: uv run mkdocs serve -f docs/mkdocs.yml
+
+site_name: Visual Graph Programming
+site_description: >-
+  Multi-platform codebase visualization: Tree-sitter parsing, GrafeoDB code
+  property graphs, OR-optimized layouts, and bidirectional text-graph sync.
+site_url: https://acfharbinger.github.io/Visual-Graph-Programming/
+repo_url: https://github.com/ACFHarbinger/Visual-Graph-Programming
+repo_name: ACFHarbinger/Visual-Graph-Programming
+edit_uri: edit/main/docs/content/
+
+docs_dir: content
+site_dir: _build/site
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep purple
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep purple
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - search.suggest
+
+markdown_extensions:
+  - admonition
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Architecture: architecture.md
+  - Modules:
+      - C++ Base Core: modules/base.md
+      - Python Backend: modules/backend.md
+      - VS Code Extension: modules/extension.md
+      - Tauri App: modules/app.md
+      - Unreal Engine Plugin: modules/plugin.md
+  - Building the Docs: building.md
+  # Generated API references are copied into site/api/<module>/ by
+  # docs/build_docs.sh after `mkdocs build` (they are full static sites of
+  # their own — Sphinx, Doxygen, TypeDoc, rustdoc — so they live outside the
+  # MkDocs nav and are linked from the module pages above).

@@ -21,6 +21,8 @@ build-debug = { cmd = "cmake --build base/build-debug --parallel", depends-on = 
 test = { cmd = "ctest --test-dir base/build --output-on-failure", depends-on = ["build"] }
 format = "find base/src base/include base/test -name '*.cpp' -o -name '*.hpp' -o -name '*.h' 2>/dev/null | xargs -r clang-format -i"
 clean = "rm -rf base/build base/build-debug"
+docs-base = "doxygen docs/base/Doxyfile"
+docs-plugin = "doxygen docs/plugin/Doxyfile"
 
 [dependencies]
 # Toolchain
@@ -42,3 +44,6 @@ libuv = ">=1.48"              # event loop for file watching / async IO
 
 # Testing
 gtest = ">=1.14"
+
+# Documentation
+doxygen = ">=1.10"

@@ -3,7 +3,8 @@ name = "visual-graph-programming"
 version = "0.1.0"
 description = "A tool that enables a developer to seamlessly transition from the traditional text-based view to an interactive graph-based view (and vice-versa) during programming."
 readme = "README.md"
-requires-python = ">=3.10"
+# grafeo (GrafeoDB bindings) requires Python 3.12+
+requires-python = ">=3.12"
 
 # Core dependencies for the Python backend module (backend/):
 # graph storage bindings, Graph-RAG retrieval, OR layout optimization,
@@ -47,6 +48,17 @@ package = ["pyinstaller>=6.10,<7.0"]
 ci = ["requests>=2.32,<3.0", "PyYAML>=6.0,<7.0", "google-genai>=0.3,<1.0"]
 
 [dependency-groups]
+# Documentation toolchain: Sphinx for the backend API reference and MkDocs
+# for the umbrella site (see docs/build_docs.sh).
+docs = [
+    "sphinx>=8.0,<9.0",
+    "furo>=2024.8",
+    "myst-parser>=4.0,<5.0",
+    "sphinx-autodoc-typehints>=2.4,<4.0",
+    "mkdocs>=1.6,<2.0",
+    "mkdocs-material>=9.5,<10.0",
+]
+
 # Development / QA tooling.
 dev = [
     "pytest>=8.0,<9.0",
@@ -71,14 +83,14 @@ asyncio_mode = "auto"
 
 [tool.ruff]
 line-length = 100
-target-version = "py310"
+target-version = "py312"
 src = ["backend", "github/scripts"]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "UP", "B", "SIM"]
 
 [tool.mypy]
-python_version = "3.10"
+python_version = "3.12"
 strict = true
 packages = ["backend"]
 
