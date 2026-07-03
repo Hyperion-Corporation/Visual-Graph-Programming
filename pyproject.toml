@@ -1,0 +1,21 @@
+[project]
+name = "visual-graph-programming"
+version = "0.1.0"
+description = "A tool that enables a developer to seamlessly transition from the traditional text-based view to an interactive graph-based view (and vice-versa) during programming."
+readme = "README.md"
+requires-python = ">=3.10"
+
+[project.optional-dependencies]
+# Dependencies for the repo automation suite under github/scripts/
+# (agent_tools.py, sync_backlog.py, check_commit_ref.py) and the
+# github/hooks/pre-commit config-validation step.
+# Install with: pip install -e ".[ci]"
+ci = [
+    "requests>=2.32,<3.0",
+    "PyYAML>=6.0,<7.0",
+    "google-genai>=0.3,<1.0",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"

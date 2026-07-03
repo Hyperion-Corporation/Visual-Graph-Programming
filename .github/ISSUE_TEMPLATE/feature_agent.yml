@@ -1,0 +1,76 @@
+name: "Feature Request (Agent-Ready)"
+description: "Propose new functionality. Structured for both human triage and LLM-agent parsing."
+title: "[Feature]: "
+labels: ["status:triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for proposing a feature. Fields below map directly to our
+        ProjectV2 board columns (`Component`, `Priority`) so the sync agent
+        can route this ticket without manual re-labeling.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: One or two sentences describing the desired capability.
+      placeholder: "Enable dragging a subgraph selection onto a new tab to fork it into a separate canvas."
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation / Use Case
+      description: Why does this matter? What workflow does it unblock?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      description: Must match a component:* label in github/config/project_labels.json.
+      options:
+        - "component:graph-engine"
+        - "component:text-sync"
+        - "component:ui-canvas"
+        - "component:lsp-bridge"
+        - "component:cli"
+        - "component:ci-automation"
+        - "component:docs"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: Must match a priority:* label in github/config/project_labels.json.
+      options:
+        - "priority:p0-blocker"
+        - "priority:p1-high"
+        - "priority:p2-medium"
+        - "priority:p3-low"
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: Bullet list of observable conditions that mean this is done.
+      placeholder: |
+        - [ ] Dragging a multi-node selection onto the "+" tab opens a new canvas
+        - [ ] The forked canvas retains edge references back to the source graph
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: agent_ack
+    attributes:
+      label: Agent Routing
+      options:
+        - label: I understand this issue may be picked up, scoped, or commented on by an automation agent (see github/scripts/agent_tools.py).
+          required: false

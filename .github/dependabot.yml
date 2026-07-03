@@ -1,0 +1,21 @@
+version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/github"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "chore(automation-deps)"
+    labels:
+      - "component:ci-automation"
+      - "priority:p3-low"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "chore(ci)"
+    labels:
+      - "component:ci-automation"
+      - "priority:p3-low"
