@@ -1,0 +1,44 @@
+# Pixi environment for the C++ base module (base/).
+# Provides the compiler toolchain, build system, and native dependencies.
+# Usage:
+#   pixi install          # create the environment
+#   pixi run configure    # cmake configure step
+#   pixi run build        # compile base/
+#   pixi run test         # run GoogleTest suite via CTest
+
+[workspace]
+name = "visual-graph-programming"
+description = "C++ toolchain and native dependencies for the VGP base module"
+authors = ["ACFHarbinger"]
+channels = ["conda-forge"]
+platforms = ["linux-64", "osx-arm64", "osx-64", "win-64"]
+
+[tasks]
+configure = "cmake -S base -B base/build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
+configure-debug = "cmake -S base -B base/build-debug -G Ninja -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
+build = { cmd = "cmake --build base/build --parallel", depends-on = ["configure"] }
+build-debug = { cmd = "cmake --build base/build-debug --parallel", depends-on = ["configure-debug"] }
+test = { cmd = "ctest --test-dir base/build --output-on-failure", depends-on = ["build"] }
+format = "find base/src base/include base/test -name '*.cpp' -o -name '*.hpp' -o -name '*.h' 2>/dev/null | xargs -r clang-format -i"
+clean = "rm -rf base/build base/build-debug"
+
+[dependencies]
+# Toolchain
+cxx-compiler = ">=1.7"
+cmake = ">=3.24"
+ninja = ">=1.11"
+pkg-config = ">=0.29"
+ccache = ">=4.9"
+
+# Lint / format
+clang-tools = ">=17"          # clang-format, clang-tidy
+
+# Native libraries used by the parsing/graph core
+tree-sitter = ">=0.24"        # incremental parsing runtime (C library)
+nlohmann_json = ">=3.11"      # JSON serialization for IPC payloads
+spdlog = ">=1.13"             # structured logging
+fmt = ">=10"                  # formatting (spdlog dependency, used directly too)
+libuv = ">=1.48"              # event loop for file watching / async IO
+
+# Testing
+gtest = ">=1.14"

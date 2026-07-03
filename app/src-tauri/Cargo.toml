@@ -1,0 +1,32 @@
+[package]
+name = "vgp-app"
+description = "Rust core of the Visual Graph Programming standalone Tauri app: window shell, IPC commands, and C++/Python sidecar supervision."
+version.workspace = true
+edition.workspace = true
+license-file.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[lib]
+name = "vgp_app_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-shell = "2"       # spawn/supervise the C++ engine and Python ML sidecars
+tauri-plugin-dialog = "2"      # native repository-picker dialogs
+serde = { workspace = true }
+serde_json = { workspace = true }
+tokio = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+thiserror = { workspace = true }
+tokio-tungstenite = "0.24"     # WebSocket client to the base graph service
+
+[features]
+# Enables devtools in the webview for debug builds
+default = []
+devtools = ["tauri/devtools"]

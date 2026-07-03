@@ -1,0 +1,27 @@
+{
+  "name": "visual-graph-programming",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Monorepo orchestrator for the TypeScript modules: VS Code extension (extension/) and Tauri app (app/). `npm install` at the root installs both workspaces.",
+  "license": "SEE LICENSE IN LICENSE",
+  "workspaces": [
+    "extension",
+    "app"
+  ],
+  "scripts": {
+    "install:all": "npm install",
+    "build": "npm run build:extension && npm run build:app",
+    "build:extension": "npm run build --workspace=extension",
+    "build:app": "npm run build --workspace=app",
+    "dev:app": "npm run tauri --workspace=app -- dev",
+    "watch:extension": "npm run watch --workspace=extension",
+    "package:extension": "npm run package --workspace=extension",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "format": "npm run format --workspaces --if-present",
+    "check-types": "npm run check-types --workspaces --if-present"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
