@@ -1,0 +1,100 @@
+# Codecov configuration for Visual Graph Programming.
+#
+# This file lives in git/ by repository convention; the CI workflow passes it
+# explicitly to the uploader / validator:
+#   curl --data-binary @git/codecov.yaml https://codecov.io/validate
+#   codecov --codecov-yml-path git/codecov.yaml
+
+codecov:
+  require_ci_to_pass: true
+  notify:
+    wait_for_ci: true
+
+coverage:
+  precision: 2
+  round: down
+  range: "50...90"
+
+  status:
+    project:
+      default:
+        target: auto
+        threshold: 1%        # allow small dips without failing the PR
+        if_ci_failed: error
+    patch:
+      default:
+        target: 70%
+        threshold: 5%
+        only_pulls: true
+
+# Per-module flags — each module's CI job uploads with its own flag so
+# coverage is tracked independently per language/component.
+flags:
+  base:
+    paths:
+      - base/
+    carryforward: true
+  backend:
+    paths:
+      - backend/
+    carryforward: true
+  extension:
+    paths:
+      - extension/src/
+    carryforward: true
+  app:
+    paths:
+      - app/src/
+      - app/src-tauri/src/
+    carryforward: true
+  plugin:
+    paths:
+      - plugin/
+    carryforward: true
+
+component_management:
+  default_rules:
+    statuses:
+      - type: project
+        target: auto
+        threshold: 1%
+  individual_components:
+    - component_id: cpp-base
+      name: C++ Base Module
+      paths:
+        - base/**
+    - component_id: python-backend
+      name: Python Backend
+      paths:
+        - backend/**
+    - component_id: vscode-extension
+      name: VS Code Extension
+      paths:
+        - extension/**
+    - component_id: tauri-app
+      name: Tauri App
+      paths:
+        - app/**
+    - component_id: unreal-plugin
+      name: Unreal Engine Plugin
+      paths:
+        - plugin/**
+
+ignore:
+  - "prisma/**"        # research reports
+  - "moon/**"          # roadmap/changelog
+  - "git/**"           # repo meta files
+  - "github/hooks/**"  # shell hooks
+  - "**/test/**"
+  - "**/tests/**"
+  - "**/*.test.ts"
+  - "**/*.spec.ts"
+  - "**/build/**"
+  - "**/dist/**"
+  - "**/target/**"
+  - "**/node_modules/**"
+
+comment:
+  layout: "header, diff, flags, components, files"
+  behavior: default
+  require_changes: true
