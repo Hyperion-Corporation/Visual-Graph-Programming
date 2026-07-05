@@ -1,0 +1,21 @@
+# ninja log v6
+6	78	8049931670987458	spdlog-populate-prefix/src/spdlog-populate-stamp/spdlog-populate-mkdir	4ffccb38ef714505
+6	78	8049931670987458	D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/spdlog-subbuild/spdlog-populate-prefix/src/spdlog-populate-stamp/spdlog-populate-mkdir	4ffccb38ef714505
+79	4975	8049931719957345	spdlog-populate-prefix/src/spdlog-populate-stamp/spdlog-populate-download	1d6a196f01749026
+79	4975	8049931719957345	D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/spdlog-subbuild/spdlog-populate-prefix/src/spdlog-populate-stamp/spdlog-populate-download	1d6a196f01749026
+4975	5171	8049931720024844	spdlog-populate-prefix/src/spdlog-populate-stamp/spdlog-populate-update	4a6b5849fd7cc4c7
+4975	5171	8049931720024844	D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/spdlog-subbuild/spdlog-populate-prefix/src/spdlog-populate-stamp/spdlog-populate-update	4a6b5849fd7cc4c7
+5173	5237	8049931722589285	spdlog-populate-prefix/src/spdlog-populate-stamp/spdlog-populate-patch	6601301d487c17f0
+5173	5237	8049931722589285	D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/spdlog-subbuild/spdlog-populate-prefix/src/spdlog-populate-stamp/spdlog-populate-patch	6601301d487c17f0
+5238	5305	8049931723264927	spdlog-populate-prefix/src/spdlog-populate-stamp/spdlog-populate-configure	158d27dcf706a74a
+5238	5305	8049931723264927	D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/spdlog-subbuild/spdlog-populate-prefix/src/spdlog-populate-stamp/spdlog-populate-configure	158d27dcf706a74a
+5305	5371	8049931723928188	spdlog-populate-prefix/src/spdlog-populate-stamp/spdlog-populate-build	660c7f96adc608be
+5305	5371	8049931723928188	D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/spdlog-subbuild/spdlog-populate-prefix/src/spdlog-populate-stamp/spdlog-populate-build	660c7f96adc608be
+5372	5441	8049931724615213	spdlog-populate-prefix/src/spdlog-populate-stamp/spdlog-populate-install	bd04e7fea4573728
+5372	5441	8049931724615213	D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/spdlog-subbuild/spdlog-populate-prefix/src/spdlog-populate-stamp/spdlog-populate-install	bd04e7fea4573728
+5441	5511	8049931725317434	spdlog-populate-prefix/src/spdlog-populate-stamp/spdlog-populate-test	bbf7165b9168fb8a
+5441	5511	8049931725317434	D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/spdlog-subbuild/spdlog-populate-prefix/src/spdlog-populate-stamp/spdlog-populate-test	bbf7165b9168fb8a
+5511	5614	8049931726337477	CMakeFiles/spdlog-populate-complete	ce5d38b23249c741
+5511	5614	8049931726337477	spdlog-populate-prefix/src/spdlog-populate-stamp/spdlog-populate-done	ce5d38b23249c741
+5511	5614	8049931726337477	D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/spdlog-subbuild/CMakeFiles/spdlog-populate-complete	ce5d38b23249c741
+5511	5614	8049931726337477	D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/spdlog-subbuild/spdlog-populate-prefix/src/spdlog-populate-stamp/spdlog-populate-done	ce5d38b23249c741

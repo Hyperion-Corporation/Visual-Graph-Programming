@@ -1,0 +1,21 @@
+# ninja log v6
+6	75	8049931741448335	ixwebsocket-populate-prefix/src/ixwebsocket-populate-stamp/ixwebsocket-populate-mkdir	ef4db7740c1bf814
+6	75	8049931741448335	D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/ixwebsocket-subbuild/ixwebsocket-populate-prefix/src/ixwebsocket-populate-stamp/ixwebsocket-populate-mkdir	ef4db7740c1bf814
+75	3853	8049931779223425	ixwebsocket-populate-prefix/src/ixwebsocket-populate-stamp/ixwebsocket-populate-download	aced4648af0297cd
+75	3853	8049931779223425	D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/ixwebsocket-subbuild/ixwebsocket-populate-prefix/src/ixwebsocket-populate-stamp/ixwebsocket-populate-download	aced4648af0297cd
+3853	4057	8049931779291502	ixwebsocket-populate-prefix/src/ixwebsocket-populate-stamp/ixwebsocket-populate-update	1015de71b51e901d
+3853	4057	8049931779291502	D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/ixwebsocket-subbuild/ixwebsocket-populate-prefix/src/ixwebsocket-populate-stamp/ixwebsocket-populate-update	1015de71b51e901d
+4061	4137	8049931782053439	ixwebsocket-populate-prefix/src/ixwebsocket-populate-stamp/ixwebsocket-populate-patch	f13722fe368c63b7
+4061	4137	8049931782053439	D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/ixwebsocket-subbuild/ixwebsocket-populate-prefix/src/ixwebsocket-populate-stamp/ixwebsocket-populate-patch	f13722fe368c63b7
+4137	4213	8049931782824228	ixwebsocket-populate-prefix/src/ixwebsocket-populate-stamp/ixwebsocket-populate-configure	6917b31021a4c886
+4137	4213	8049931782824228	D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/ixwebsocket-subbuild/ixwebsocket-populate-prefix/src/ixwebsocket-populate-stamp/ixwebsocket-populate-configure	6917b31021a4c886
+4213	4282	8049931783513217	ixwebsocket-populate-prefix/src/ixwebsocket-populate-stamp/ixwebsocket-populate-build	c6fbaaaca999c513
+4213	4282	8049931783513217	D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/ixwebsocket-subbuild/ixwebsocket-populate-prefix/src/ixwebsocket-populate-stamp/ixwebsocket-populate-build	c6fbaaaca999c513
+4282	4351	8049931784212560	ixwebsocket-populate-prefix/src/ixwebsocket-populate-stamp/ixwebsocket-populate-install	330019981fc99663
+4282	4351	8049931784212560	D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/ixwebsocket-subbuild/ixwebsocket-populate-prefix/src/ixwebsocket-populate-stamp/ixwebsocket-populate-install	330019981fc99663
+4352	4434	8049931785041358	ixwebsocket-populate-prefix/src/ixwebsocket-populate-stamp/ixwebsocket-populate-test	b36cbea9c46d7d51
+4352	4434	8049931785041358	D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/ixwebsocket-subbuild/ixwebsocket-populate-prefix/src/ixwebsocket-populate-stamp/ixwebsocket-populate-test	b36cbea9c46d7d51
+4434	4522	8049931785928562	CMakeFiles/ixwebsocket-populate-complete	e786b9323a87aa65
+4434	4522	8049931785928562	ixwebsocket-populate-prefix/src/ixwebsocket-populate-stamp/ixwebsocket-populate-done	e786b9323a87aa65
+4434	4522	8049931785928562	D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/ixwebsocket-subbuild/CMakeFiles/ixwebsocket-populate-complete	e786b9323a87aa65
+4434	4522	8049931785928562	D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/ixwebsocket-subbuild/ixwebsocket-populate-prefix/src/ixwebsocket-populate-stamp/ixwebsocket-populate-done	e786b9323a87aa65

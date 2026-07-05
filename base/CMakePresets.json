@@ -1,0 +1,99 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 24,
+        "patch": 0
+    },
+
+    "configurePresets": [
+        {
+            "name": "base",
+            "hidden": true,
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_CXX_STANDARD": "20",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+            }
+        },
+
+        {
+            "name": "debug",
+            "inherits": "base",
+            "displayName": "Debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+
+        {
+            "name": "release",
+            "inherits": "base",
+            "displayName": "Release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+
+        {
+            "name": "debug-clang",
+            "inherits": "debug",
+            "displayName": "Debug + Clang",
+            "cacheVariables": {
+                "VGP_ENABLE_CLANG": "ON"
+            }
+        },
+
+        {
+            "name": "release-clang",
+            "inherits": "release",
+            "displayName": "Release + Clang",
+            "cacheVariables": {
+                "VGP_ENABLE_CLANG": "ON"
+            }
+        },
+
+        {
+            "name": "debug-no-tests",
+            "inherits": "debug",
+            "displayName": "Debug (No Tests)",
+            "cacheVariables": {
+                "VGP_BUILD_TESTS": "OFF"
+            }
+        }
+    ],
+
+    "buildPresets": [
+        {
+            "name": "debug",
+            "configurePreset": "debug"
+        },
+        {
+            "name": "release",
+            "configurePreset": "release"
+        },
+        {
+            "name": "debug-clang",
+            "configurePreset": "debug-clang"
+        },
+        {
+            "name": "release-clang",
+            "configurePreset": "release-clang"
+        },
+        {
+            "name": "debug-no-tests",
+            "configurePreset": "debug-no-tests"
+        }
+    ],
+
+    "testPresets": [
+        {
+            "name": "debug",
+            "configurePreset": "debug",
+            "output": {
+                "outputOnFailure": true
+            }
+        }
+    ]
+}

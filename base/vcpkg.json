@@ -1,0 +1,12 @@
+{
+    "name": "vgp-base",
+    "version": "0.1.0",
+    "dependencies": [
+        "tree-sitter",
+        "nlohmann-json",
+        "spdlog",
+        "ixwebsocket",
+        "gtest",
+        "zlib"
+    ]
+}

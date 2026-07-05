@@ -1,0 +1,21 @@
+# ninja log v6
+5	79	8049931578148024	tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-mkdir	6e124d6566562b8a
+5	79	8049931578148024	D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/tree-sitter-subbuild/tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-mkdir	6e124d6566562b8a
+79	5629	8049931633650145	tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-download	dcf602fb31581c40
+79	5629	8049931633650145	D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/tree-sitter-subbuild/tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-download	dcf602fb31581c40
+5629	5821	8049931633713055	tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-update	dfbc601f6bc5aefc
+5629	5821	8049931633713055	D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/tree-sitter-subbuild/tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-update	dfbc601f6bc5aefc
+5851	5920	8049931636553236	tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-patch	19310e61dabcb421
+5851	5920	8049931636553236	D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/tree-sitter-subbuild/tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-patch	19310e61dabcb421
+5920	5990	8049931637260651	tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-configure	68907df1043378d2
+5920	5990	8049931637260651	D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/tree-sitter-subbuild/tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-configure	68907df1043378d2
+5991	6059	8049931637950515	tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-build	7bc08afc81664d8d
+5991	6059	8049931637950515	D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/tree-sitter-subbuild/tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-build	7bc08afc81664d8d
+6059	6126	8049931638619032	tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-install	a24bb5297d13eecf
+6059	6126	8049931638619032	D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/tree-sitter-subbuild/tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-install	a24bb5297d13eecf
+6126	6194	8049931639303437	tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-test	670521ebdeb2719f
+6126	6194	8049931639303437	D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/tree-sitter-subbuild/tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-test	670521ebdeb2719f
+6195	6285	8049931640219512	CMakeFiles/tree-sitter-populate-complete	ab41874e80b5d13a
+6195	6285	8049931640219512	tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-done	ab41874e80b5d13a
+6195	6285	8049931640219512	D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/tree-sitter-subbuild/CMakeFiles/tree-sitter-populate-complete	ab41874e80b5d13a
+6195	6285	8049931640219512	D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/tree-sitter-subbuild/tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-done	ab41874e80b5d13a

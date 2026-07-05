@@ -1,0 +1,14 @@
+# Target labels
+ tree-sitter-populate
+# Source files and their labels
+D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/tree-sitter-subbuild/CMakeFiles/tree-sitter-populate
+D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/tree-sitter-subbuild/CMakeFiles/tree-sitter-populate.rule
+D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/tree-sitter-subbuild/CMakeFiles/tree-sitter-populate-complete.rule
+D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/tree-sitter-subbuild/tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-build.rule
+D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/tree-sitter-subbuild/tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-configure.rule
+D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/tree-sitter-subbuild/tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-download.rule
+D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/tree-sitter-subbuild/tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-install.rule
+D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/tree-sitter-subbuild/tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-mkdir.rule
+D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/tree-sitter-subbuild/tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-patch.rule
+D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/tree-sitter-subbuild/tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-test.rule
+D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/tree-sitter-subbuild/tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-update.rule

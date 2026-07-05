@@ -1,0 +1,3 @@
+D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/spdlog-subbuild/CMakeFiles/spdlog-populate.dir
+D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/spdlog-subbuild/CMakeFiles/edit_cache.dir
+D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/spdlog-subbuild/CMakeFiles/rebuild_cache.dir

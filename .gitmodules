@@ -1,0 +1,6 @@
+[submodule "libs/base/llvm"]
+	path = libs/base/llvm
+	url = https://github.com/fafpinheiro/llvm-project.git
+[submodule "libs/base/tree.sitter"]
+	path = libs/base/tree.sitter
+	url = https://github.com/fafpinheiro/tree-sitter.git

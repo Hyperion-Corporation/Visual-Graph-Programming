@@ -1,0 +1,10 @@
+prefix=C:/Program Files (x86)/vgp_base
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: tree-sitter
+Description: An incremental parsing system for programming tools
+URL: https://tree-sitter.github.io/tree-sitter/
+Version: 0.25.6
+Libs: -L${libdir} -ltree-sitter
+Cflags: -I${includedir}

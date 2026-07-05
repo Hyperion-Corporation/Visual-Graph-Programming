@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/tree-sitter-subbuild/CMakeFiles/tree-sitter-populate"
+		},
+		{
+			"file" : "D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/tree-sitter-subbuild/CMakeFiles/tree-sitter-populate.rule"
+		},
+		{
+			"file" : "D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/tree-sitter-subbuild/CMakeFiles/tree-sitter-populate-complete.rule"
+		},
+		{
+			"file" : "D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/tree-sitter-subbuild/tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-build.rule"
+		},
+		{
+			"file" : "D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/tree-sitter-subbuild/tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-configure.rule"
+		},
+		{
+			"file" : "D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/tree-sitter-subbuild/tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-download.rule"
+		},
+		{
+			"file" : "D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/tree-sitter-subbuild/tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-install.rule"
+		},
+		{
+			"file" : "D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/tree-sitter-subbuild/tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-mkdir.rule"
+		},
+		{
+			"file" : "D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/tree-sitter-subbuild/tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-patch.rule"
+		},
+		{
+			"file" : "D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/tree-sitter-subbuild/tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-test.rule"
+		},
+		{
+			"file" : "D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/tree-sitter-subbuild/tree-sitter-populate-prefix/src/tree-sitter-populate-stamp/tree-sitter-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"tree-sitter-populate"
+		],
+		"name" : "tree-sitter-populate"
+	}
+}

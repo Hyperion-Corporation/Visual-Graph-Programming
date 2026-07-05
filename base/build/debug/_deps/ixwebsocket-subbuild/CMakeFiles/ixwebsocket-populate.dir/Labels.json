@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/ixwebsocket-subbuild/CMakeFiles/ixwebsocket-populate"
+		},
+		{
+			"file" : "D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/ixwebsocket-subbuild/CMakeFiles/ixwebsocket-populate.rule"
+		},
+		{
+			"file" : "D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/ixwebsocket-subbuild/CMakeFiles/ixwebsocket-populate-complete.rule"
+		},
+		{
+			"file" : "D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/ixwebsocket-subbuild/ixwebsocket-populate-prefix/src/ixwebsocket-populate-stamp/ixwebsocket-populate-build.rule"
+		},
+		{
+			"file" : "D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/ixwebsocket-subbuild/ixwebsocket-populate-prefix/src/ixwebsocket-populate-stamp/ixwebsocket-populate-configure.rule"
+		},
+		{
+			"file" : "D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/ixwebsocket-subbuild/ixwebsocket-populate-prefix/src/ixwebsocket-populate-stamp/ixwebsocket-populate-download.rule"
+		},
+		{
+			"file" : "D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/ixwebsocket-subbuild/ixwebsocket-populate-prefix/src/ixwebsocket-populate-stamp/ixwebsocket-populate-install.rule"
+		},
+		{
+			"file" : "D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/ixwebsocket-subbuild/ixwebsocket-populate-prefix/src/ixwebsocket-populate-stamp/ixwebsocket-populate-mkdir.rule"
+		},
+		{
+			"file" : "D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/ixwebsocket-subbuild/ixwebsocket-populate-prefix/src/ixwebsocket-populate-stamp/ixwebsocket-populate-patch.rule"
+		},
+		{
+			"file" : "D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/ixwebsocket-subbuild/ixwebsocket-populate-prefix/src/ixwebsocket-populate-stamp/ixwebsocket-populate-test.rule"
+		},
+		{
+			"file" : "D:/DEVELOPMENT/Visual-Graph-Programming/base/build/debug/_deps/ixwebsocket-subbuild/ixwebsocket-populate-prefix/src/ixwebsocket-populate-stamp/ixwebsocket-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"ixwebsocket-populate"
+		],
+		"name" : "ixwebsocket-populate"
+	}
+}

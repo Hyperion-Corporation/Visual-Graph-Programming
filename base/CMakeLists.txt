@@ -23,6 +23,12 @@ include(FetchContent)
 # FetchContent so a bare CMake configure still works.
 
 find_package(PkgConfig QUIET)
+#find_package(tree-sitter CONFIG REQUIRED)
+#find_package(nlohmann_json CONFIG REQUIRED)
+#find_package(spdlog CONFIG REQUIRED)
+#find_package(IXWebSocket CONFIG REQUIRED)
+#find_package(GTest CONFIG REQUIRED)
+find_package(ZLIB REQUIRED)
 
 # Tree-sitter runtime (incremental parsing)
 if(PkgConfig_FOUND)
@@ -97,34 +103,86 @@ else()
   set(VGP_HAVE_GRAFEO OFF)
 endif()
 
+# Clang / LLVM (semantic C++ analysis)
+option(VGP_ENABLE_CLANG "Enable Clang semantic parser" ON)
+if(VGP_ENABLE_CLANG)
+
+    find_package(LLVM CONFIG QUIET)
+    find_package(Clang CONFIG QUIET)
+
+    if(LLVM_FOUND AND Clang_FOUND)
+
+        message(STATUS "LLVM found: ${LLVM_PACKAGE_VERSION}")
+        message(STATUS "Clang support enabled")
+
+        set(VGP_HAVE_CLANG ON)
+
+        include_directories(SYSTEM
+            ${LLVM_INCLUDE_DIRS}
+            ${CLANG_INCLUDE_DIRS}
+        )
+
+        add_definitions(${LLVM_DEFINITIONS})
+
+    else()
+
+        message(STATUS "LLVM/Clang not found - semantic parser disabled")
+        set(VGP_HAVE_CLANG OFF)
+
+    endif()
+
+endif()
+
+
 # --- Library targets --------------------------------------------------------
 
 file(GLOB_RECURSE VGP_SOURCES CONFIGURE_DEPENDS src/*.cpp src/*.c)
+if(VGP_HAVE_CLANG)
 
+    target_compile_definitions(vgp_base
+        PRIVATE
+            VGP_HAVE_CLANG=1
+    )
+
+    target_link_libraries(vgp_base PRIVATE clangTooling clangFrontend clangSerialization clangDriver clangParse clangSema clangAnalysis clangAST clangASTMatchers clangEdit clangLex clangBasic 
+    )
+
+endif()
 if(VGP_SOURCES)
-  FetchContent_MakeAvailable(tree-sitter-cpp tree-sitter-python tree-sitter-typescript)
+  ###FetchContent_MakeAvailable(tree-sitter-cpp tree-sitter-python tree-sitter-typescript)
+  ###
+  ###if(VGP_BUILD_SHARED)
+  ###  add_library(vgp_base SHARED ${VGP_SOURCES})
+  ###else()
+  ###  add_library(vgp_base STATIC ${VGP_SOURCES})
+  ###endif()
+  ###
+  ###target_include_directories(vgp_base PUBLIC
+  ###  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  ###  $<INSTALL_INTERFACE:include>
+  ###)
+  ###
+  ###if(TREE_SITTER_FOUND)
+  ###  target_link_libraries(vgp_base PUBLIC PkgConfig::TREE_SITTER)
+  ###else()
+  ###  target_link_libraries(vgp_base PUBLIC tree-sitter)
+  ###endif()
 
-  if(VGP_BUILD_SHARED)
-    add_library(vgp_base SHARED ${VGP_SOURCES})
-  else()
-    add_library(vgp_base STATIC ${VGP_SOURCES})
-  endif()
-
-  target_include_directories(vgp_base PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<INSTALL_INTERFACE:include>
-  )
-
-  if(TREE_SITTER_FOUND)
-    target_link_libraries(vgp_base PUBLIC PkgConfig::TREE_SITTER)
-  else()
-    target_link_libraries(vgp_base PUBLIC tree-sitter)
-  endif()
+  # Tree-sitter runtime (vendored as a git submodule)
+  add_subdirectory(libs/base/tree.sitter/lib)
+  target_link_libraries(vgp_base PUBLIC tree-sitter)
+ # add_subdirectory(libs/tree-sitter/lib)
+ # add_subdirectory(libs/tree-sitter-cpp)
+ # add_subdirectory(libs/tree-sitter-python)
+ # add_subdirectory(libs/tree-sitter-typescript)
 
   target_link_libraries(vgp_base
     PUBLIC nlohmann_json::nlohmann_json
     PRIVATE spdlog::spdlog ixwebsocket::ixwebsocket
   )
+
+  target_link_libraries(vgp_base PUBLIC ZLIB::ZLIB
+)
 
   if(VGP_HAVE_GRAFEO)
     target_include_directories(vgp_base PRIVATE ${GRAFEO_INCLUDE_DIR})
