@@ -1,80 +1,16 @@
 [project]
-name = "visual-graph-programming"
+name = "visual-graph-programming-workspace"
 version = "0.1.0"
-description = "A tool that enables a developer to seamlessly transition from the traditional text-based view to an interactive graph-based view (and vice-versa) during programming."
+description = "Root workspace manifest for Visual-Graph-Programming. The actual Python module lives in backend/ (see backend/pyproject.toml)."
 readme = "README.md"
-# grafeo (GrafeoDB bindings) requires Python 3.12+
 requires-python = ">=3.12"
+dependencies = []
 
-# Core dependencies for the Python backend module (backend/):
-# graph storage bindings, Graph-RAG retrieval, OR layout optimization,
-# MCP server, and sidecar IPC.
-dependencies = [
-    # Embedded graph + vector database (shared with the C++ base module)
-    "grafeo>=0.3,<1.0",
-    # Graph algorithms and analysis
-    "networkx>=3.2,<4.0",
-    "numpy>=1.26,<3.0",
-    "scipy>=1.11,<2.0",
-    # Operations Research layout engine (stress majorization / MIP)
-    "ortools>=9.10,<10.0",
-    # Incremental parsing (mirrors the C++ pipeline for sidecar-only flows)
-    "tree-sitter>=0.23,<0.26",
-    "tree-sitter-cpp>=0.23,<0.24",
-    "tree-sitter-python>=0.23,<0.24",
-    "tree-sitter-typescript>=0.23,<0.24",
-    # Model Context Protocol server (LLM agent integration)
-    "mcp>=1.2,<2.0",
-    # IPC with the Tauri app / engine plugin
-    "websockets>=13.0,<15.0",
-    # Semantic visual diffing between commits
-    "GitPython>=3.1,<4.0",
-    # Config & data models
-    "pydantic>=2.7,<3.0",
-    "PyYAML>=6.0,<7.0",
-]
+[tool.uv.workspace]
+members = ["backend"]
 
-[project.optional-dependencies]
-# Heavy ML stack for code embeddings and Graph-RAG (GPU optional).
-ml = ["torch>=2.4,<3.0", "sentence-transformers>=3.0,<4.0"]
-
-# Sidecar packaging for the Tauri app (roadmap step A2.6).
-package = ["pyinstaller>=6.10,<7.0"]
-
-# Dependencies for the repo automation suite under github/scripts/
-# (agent_tools.py, sync_backlog.py, check_commit_ref.py) and the
-# github/hooks/pre-commit config-validation step.
-# Install with: pip install -e ".[ci]"
-ci = ["requests>=2.32,<3.0", "PyYAML>=6.0,<7.0", "google-genai>=0.3,<1.0"]
-
-[dependency-groups]
-# Documentation toolchain: Sphinx for the backend API reference and MkDocs
-# for the umbrella site (see docs/build_docs.sh).
-docs = [
-    "sphinx>=8.0,<9.0",
-    "furo>=2024.8",
-    "myst-parser>=4.0,<5.0",
-    "sphinx-autodoc-typehints>=2.4,<4.0",
-    "mkdocs>=1.6,<2.0",
-    "mkdocs-material>=9.5,<10.0",
-]
-
-# Development / QA tooling.
-dev = [
-    "pytest>=8.0,<9.0",
-    "pytest-cov>=5.0,<7.0",
-    "pytest-asyncio>=0.24,<1.0",
-    "ruff>=0.6,<1.0",
-    "mypy>=1.11,<2.0",
-    "types-PyYAML",
-]
-
-[build-system]
-requires = ["setuptools>=68"]
-build-backend = "setuptools.build_meta"
-
-[tool.setuptools.packages.find]
-include = ["backend*"]
+[tool.uv]
+package = false
 
 [tool.pytest.ini_options]
 testpaths = ["backend/test"]
