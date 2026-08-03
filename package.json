@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "description": "Monorepo orchestrator for the TypeScript modules: VS Code extension (extension/) and Tauri app (app/). `npm install` at the root installs both workspaces.",
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "SEE LICENSE IN LICENSE.md",
   "workspaces": [
     "extension",
     "app"

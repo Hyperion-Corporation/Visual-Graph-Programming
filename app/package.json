@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "description": "Visual Graph Programming standalone desktop app — Tauri 2 + React 19 graph canvas with C++/Python sidecars.",
   "type": "module",
-  "license": "SEE LICENSE IN ../LICENSE",
+  "license": "SEE LICENSE IN ../LICENSE.md",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",

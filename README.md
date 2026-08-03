@@ -8,7 +8,7 @@
 <a href="https://github.com/ACFHarbinger/Visual-Graph-Programming/actions/workflows/agent_sync.yml"><img alt="Agent Sync" src="https://github.com/ACFHarbinger/Visual-Graph-Programming/actions/workflows/agent_sync.yml/badge.svg"></a>
 <a href="https://codecov.io/gh/ACFHarbinger/Visual-Graph-Programming"><img alt="Codecov" src="https://img.shields.io/badge/codecov-configured-F01F7A?logo=codecov&logoColor=white"></a>
 <a href="https://dependabot.com/"><img alt="Dependabot" src="https://img.shields.io/badge/Dependabot-enabled-025E8C?logo=dependabot&logoColor=white"></a>
-<a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/License-See_LICENSE-blue.svg"></a>
+<a href="LICENSE.md"><img alt="License" src="https://img.shields.io/badge/License-AGPL--3.0%20%2F%20Commercial-blue.svg"></a>
 
 </br>
 
@@ -421,14 +421,13 @@ git checkout -b feature/your-feature-name
 
 ## <a id="-license"></a>📄 License
 
-This project is licensed under the terms specified in the [LICENSE](LICENSE) file.
+This project is dual-licensed under an open-core model:
 
----
-
-<div align="center">
-
-**Visual Graph Programming** — See your code. Shape your code.
-
-[Report a Bug](https://github.com/ACFHarbinger/Visual-Graph-Programming/issues) | [Request a Feature](https://github.com/ACFHarbinger/Visual-Graph-Programming/issues) | [Project Board](https://github.com/users/ACFHarbinger/projects/13/)
-
-</div>
+- **Open source (free) — GNU AGPL-3.0.** Free to use, modify, and
+  distribute for hobbyists, students, researchers, non-profits, and any
+  other use that complies with the [AGPL-3.0](LICENSE.md)'s copyleft and
+  network source-disclosure terms.
+- **Commercial (paid).** For proprietary, closed-source, or SaaS use that
+  can't comply with the AGPL's obligations, a paid
+  [commercial license](LICENSE.txt) is available — contact ACFHarbinger
+  <afonso.fernandes100@gmail.com> for pricing and terms.
