@@ -7,7 +7,7 @@ Description: Serverless Backend stack for the Visual Graph Programming.
 
 Resources:
   # DynamoDB Database Table
-  Visual_graph_programmingTable:
+  VisualGraphProgrammingTable:
     Type: AWS::Serverless::SimpleTable
     Properties:
       PrimaryKey:
@@ -18,7 +18,7 @@ Resources:
         WriteCapacityUnits: 5
 
   # Lambda Function
-  Visual_graph_programmingFunction:
+  VisualGraphProgrammingFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: handler.lambda_handler
@@ -26,10 +26,10 @@ Resources:
       CodeUri: ./src
       Environment:
         Variables:
-          TABLE_NAME: !Ref Visual_graph_programmingTable
+          TABLE_NAME: !Ref VisualGraphProgrammingTable
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: !Ref Visual_graph_programmingTable
+            TableName: !Ref VisualGraphProgrammingTable
       Events:
         ApiEvent:
           Type: Api
