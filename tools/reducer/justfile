@@ -1,0 +1,21 @@
+# tools/reducer/justfile
+# Cleanup recipes for every module's build outputs.
+
+set shell := ["bash", "-c"]
+set working-directory := '../..'
+
+yellow := '\033[0;33m'
+reset := '\033[0m'
+
+# Clean everything: C++ (base/build), Rust (target/), npm (dist/), Python caches, docs build
+clean:
+    @echo -e "{{yellow}}Cleaning C++ base module build outputs (base/build)...{{reset}}"
+    pixi run clean
+    @echo -e "{{yellow}}Cleaning Rust build outputs (target/)...{{reset}}"
+    cargo clean
+    @echo -e "{{yellow}}Cleaning npm workspace build outputs...{{reset}}"
+    rm -rf extension/dist app/dist
+    @echo -e "{{yellow}}Cleaning Python caches...{{reset}}"
+    find backend -type d -name __pycache__ -prune -exec rm -rf {} +
+    @echo -e "{{yellow}}Cleaning docs build output (docs/_build)...{{reset}}"
+    rm -rf docs/_build

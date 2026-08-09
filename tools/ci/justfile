@@ -1,0 +1,24 @@
+# tools/ci/justfile
+# Recipes mirrored by .github/workflows/ci.yml — kept here so the exact same
+# commands can be run locally before pushing.
+
+set shell := ["bash", "-c"]
+set working-directory := '../..'
+
+cyan := '\033[0;36m'
+green := '\033[0;32m'
+reset := '\033[0m'
+
+# Everything CI runs on a pull request, across every module, in order
+pr-gate:
+    @echo -e "{{cyan}}Running full PR gate: lint -> test -> build, all modules...{{reset}}"
+    just validation::check
+    just test::cpp
+    just test::py
+    just test::ts
+    just test::rust
+    just build::cpp
+    just build::extension
+    just build::app
+    just build::rust
+    @echo -e "{{green}}✓ Full PR gate passed.{{reset}}"

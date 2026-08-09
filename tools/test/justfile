@@ -1,0 +1,29 @@
+# tools/test/justfile
+# Per-module test recipes: pixi (C++), uv/pytest (Python), npm (TypeScript),
+# cargo (Rust).
+
+set shell := ["bash", "-c"]
+set working-directory := '../..'
+
+cyan := '\033[0;36m'
+reset := '\033[0m'
+
+# Run the C++ base module test suite (base/, via pixi)
+cpp:
+    @echo -e "{{cyan}}Running C++ base module tests (base/)...{{reset}}"
+    pixi run test
+
+# Run the Python backend test suite (backend/, via uv)
+py:
+    @echo -e "{{cyan}}Running Python backend tests (backend/)...{{reset}}"
+    uv run pytest
+
+# Run extension/ + app/ tests (npm workspaces)
+ts:
+    @echo -e "{{cyan}}Running extension/ + app/ tests...{{reset}}"
+    npm run test
+
+# Run the Rust core test suite (app/src-tauri, via cargo)
+rust:
+    @echo -e "{{cyan}}Running Rust core tests (app/src-tauri)...{{reset}}"
+    cargo test

@@ -1,0 +1,17 @@
+# tools/docs/justfile
+# VGP documentation site recipes — see docs/build_docs.sh.
+
+set shell := ["bash", "-c"]
+set working-directory := '../..'
+
+cyan := '\033[0;36m'
+reset := '\033[0m'
+
+# Build the full documentation site (Sphinx + Doxygen + TypeDoc + rustdoc + MkDocs)
+build:
+    @echo -e "{{cyan}}Building the VGP documentation site...{{reset}}"
+    bash docs/build_docs.sh
+
+# Serve the MkDocs narrative site locally with live reload
+serve:
+    uv run --no-sync mkdocs serve --config-file docs/mkdocs.yml

@@ -1,0 +1,32 @@
+# tools/validation/justfile
+# Formatting/static-analysis recipes — mirrored by .github/workflows/ci.yml.
+
+set shell := ["bash", "-c"]
+set working-directory := '../..'
+
+cyan := '\033[0;36m'
+green := '\033[0;32m'
+reset := '\033[0m'
+
+# Lint every module: ruff (backend/), eslint + tsc (extension/, app/), clippy (app/src-tauri)
+check:
+    @echo -e "{{cyan}}Linting Python backend (ruff, mypy)...{{reset}}"
+    uv run ruff check .
+    uv run mypy backend
+    @echo -e "{{cyan}}Linting TypeScript workspaces (eslint, tsc)...{{reset}}"
+    npm run lint
+    npm run check-types
+    @echo -e "{{cyan}}Linting Rust core (clippy, fmt --check)...{{reset}}"
+    cargo clippy -- -D warnings
+    cargo fmt --check
+    @echo -e "{{green}}✓ All modules passed lint.{{reset}}"
+
+# Auto-format every module: ruff format, prettier (via npm), cargo fmt
+fix:
+    @echo -e "{{cyan}}Formatting Python backend (ruff format)...{{reset}}"
+    uv run ruff format .
+    @echo -e "{{cyan}}Formatting TypeScript workspaces...{{reset}}"
+    npm run format
+    @echo -e "{{cyan}}Formatting Rust core (cargo fmt)...{{reset}}"
+    cargo fmt
+    @echo -e "{{green}}✓ All modules reformatted.{{reset}}"

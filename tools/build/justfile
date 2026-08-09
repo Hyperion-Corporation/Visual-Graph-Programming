@@ -1,0 +1,36 @@
+# tools/build/justfile
+# Build recipes for every module: C++ base (pixi+CMake), TypeScript npm
+# workspaces (extension/, app/), and the Rust/Tauri core (app/src-tauri).
+
+set shell := ["bash", "-c"]
+set working-directory := '../..'
+
+cyan := '\033[0;36m'
+reset := '\033[0m'
+
+# --- C++ base module (base/) ---
+
+# Configure + build the C++ core via pixi
+cpp:
+    @echo -e "{{cyan}}Configuring + building the C++ base module (base/)...{{reset}}"
+    pixi run configure
+    pixi run build
+
+# --- TypeScript npm workspaces ---
+
+# Build the VS Code extension (extension/)
+extension:
+    @echo -e "{{cyan}}Building the VS Code extension (extension/)...{{reset}}"
+    npm run build:extension
+
+# Build the Tauri app's frontend + bundle (app/)
+app:
+    @echo -e "{{cyan}}Building the Tauri app (app/)...{{reset}}"
+    npm run build:app
+
+# --- Rust / Tauri core ---
+
+# Build the Rust core (app/src-tauri, via cargo)
+rust:
+    @echo -e "{{cyan}}Building the Rust core (app/src-tauri)...{{reset}}"
+    cargo build
