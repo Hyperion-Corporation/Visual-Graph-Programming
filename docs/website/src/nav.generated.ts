@@ -179,6 +179,60 @@ export const navTree: NavNode[] = [
         "source": "infra/nginx/README.md"
       }
     ]
+  },
+  {
+    "title": "Roadmap",
+    "kind": "section",
+    "children": [
+      {
+        "title": "Roadmap",
+        "kind": "md",
+        "path": "/repo/docs/moon/ROADMAP",
+        "source": "docs/moon/ROADMAP.md"
+      },
+      {
+        "title": "Changelog",
+        "kind": "md",
+        "path": "/repo/docs/moon/CHANGELOG",
+        "source": "docs/moon/CHANGELOG.md"
+      },
+      {
+        "title": "Track A — Base",
+        "kind": "md",
+        "path": "/repo/docs/moon/roadmaps/base",
+        "source": "docs/moon/roadmaps/base.md"
+      },
+      {
+        "title": "Track A — Backend",
+        "kind": "md",
+        "path": "/repo/docs/moon/roadmaps/backend",
+        "source": "docs/moon/roadmaps/backend.md"
+      },
+      {
+        "title": "Track B — Extension",
+        "kind": "md",
+        "path": "/repo/docs/moon/roadmaps/extension",
+        "source": "docs/moon/roadmaps/extension.md"
+      },
+      {
+        "title": "Track C — Plugin",
+        "kind": "md",
+        "path": "/repo/docs/moon/roadmaps/plugin",
+        "source": "docs/moon/roadmaps/plugin.md"
+      },
+      {
+        "title": "Track D — App",
+        "kind": "md",
+        "path": "/repo/docs/moon/roadmaps/app",
+        "source": "docs/moon/roadmaps/app.md"
+      },
+      {
+        "title": "Cross-Cutting — CI & Automation",
+        "kind": "md",
+        "path": "/repo/docs/moon/roadmaps/ci_automation",
+        "source": "docs/moon/roadmaps/ci_automation.md"
+      }
+    ]
   }
 ];
 
@@ -297,5 +351,45 @@ export const searchIndex: { title: string; path: string; source: string }[] = [
     "title": "Nginx",
     "path": "/repo/infra/nginx/README",
     "source": "infra/nginx/README.md"
+  },
+  {
+    "title": "Roadmap",
+    "path": "/repo/docs/moon/ROADMAP",
+    "source": "docs/moon/ROADMAP.md"
+  },
+  {
+    "title": "Changelog",
+    "path": "/repo/docs/moon/CHANGELOG",
+    "source": "docs/moon/CHANGELOG.md"
+  },
+  {
+    "title": "Track A — Base",
+    "path": "/repo/docs/moon/roadmaps/base",
+    "source": "docs/moon/roadmaps/base.md"
+  },
+  {
+    "title": "Track A — Backend",
+    "path": "/repo/docs/moon/roadmaps/backend",
+    "source": "docs/moon/roadmaps/backend.md"
+  },
+  {
+    "title": "Track B — Extension",
+    "path": "/repo/docs/moon/roadmaps/extension",
+    "source": "docs/moon/roadmaps/extension.md"
+  },
+  {
+    "title": "Track C — Plugin",
+    "path": "/repo/docs/moon/roadmaps/plugin",
+    "source": "docs/moon/roadmaps/plugin.md"
+  },
+  {
+    "title": "Track D — App",
+    "path": "/repo/docs/moon/roadmaps/app",
+    "source": "docs/moon/roadmaps/app.md"
+  },
+  {
+    "title": "Cross-Cutting — CI & Automation",
+    "path": "/repo/docs/moon/roadmaps/ci_automation",
+    "source": "docs/moon/roadmaps/ci_automation.md"
   }
 ];

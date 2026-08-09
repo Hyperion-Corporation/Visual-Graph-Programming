@@ -1,0 +1,43 @@
+# Docs/content graph for the Visual Graph Programming website (static-export friendly).
+# A live query server is out of scope here — fixtures / MSW only.
+
+enum GraphNodeKind {
+  FILE
+  CLASS
+  FUNCTION
+}
+
+enum GraphEdgeKind {
+  CALL
+  IMPORT
+}
+
+type GraphNode {
+  id: ID!
+  kind: GraphNodeKind!
+  label: String!
+  x: Float!
+  y: Float!
+}
+
+type GraphEdgeLane {
+  id: ID!
+  kind: GraphEdgeKind!
+  label: String!
+}
+
+type RoadmapStory {
+  id: ID!
+  title: String!
+  track: String!
+  summary: String!
+  tags: [String!]!
+  docPath: String
+}
+
+type Query {
+  graphNodes: [GraphNode!]!
+  graphEdgeLanes: [GraphEdgeLane!]!
+  roadmapStories: [RoadmapStory!]!
+  roadmapStory(id: ID!): RoadmapStory
+}

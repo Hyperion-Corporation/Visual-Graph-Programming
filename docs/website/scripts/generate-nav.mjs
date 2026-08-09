@@ -73,6 +73,19 @@ const EXTRA_SECTIONS = [
       { title: "Nginx", source: "infra/nginx/README.md" },
     ],
   },
+  {
+    title: "Roadmap",
+    children: [
+      { title: "Roadmap", source: "docs/moon/ROADMAP.md" },
+      { title: "Changelog", source: "docs/moon/CHANGELOG.md" },
+      { title: "Track A — Base", source: "docs/moon/roadmaps/base.md" },
+      { title: "Track A — Backend", source: "docs/moon/roadmaps/backend.md" },
+      { title: "Track B — Extension", source: "docs/moon/roadmaps/extension.md" },
+      { title: "Track C — Plugin", source: "docs/moon/roadmaps/plugin.md" },
+      { title: "Track D — App", source: "docs/moon/roadmaps/app.md" },
+      { title: "Cross-Cutting — CI & Automation", source: "docs/moon/roadmaps/ci_automation.md" },
+    ],
+  },
 ];
 
 function isExternal(target) {
