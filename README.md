@@ -434,9 +434,11 @@ This project is dual-licensed under an open-core model:
 
 ## Infrastructure layout
 
-Optional deploy and edge configs live under [`infra/`](infra/README.md):
+Optional deploy and edge configs for a shared, always-on `backend/` instance
+live under [`infra/`](infra/README.md) — none of it is required for the
+VS Code extension, the Tauri app, or the Unreal plugin:
 
-- `infra/global/` — external deploy/host tooling
-- `infra/cloud/` — managed cloud host configs
-- `infra/private/` — developer-only tooling
-- `infra/server/` — nginx and Envoy reverse-proxy configs
+- `infra/docker/` — containerize the backend (Dockerfile, docker-compose)
+- `infra/ansible/` — provision a bare-metal/VM host for the backend
+- `infra/terraform/` — placeholder cloud provisioning for the backend
+- `infra/nginx/` — nginx config for serving a static docs/site export

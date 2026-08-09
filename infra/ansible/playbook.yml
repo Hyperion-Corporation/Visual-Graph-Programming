@@ -1,0 +1,6 @@
+---
+- name: Provision the optionally-hosted VGP backend
+  hosts: backend
+  become: true
+  roles:
+    - app

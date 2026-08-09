@@ -1,35 +1,19 @@
 # infra/
 
 Infrastructure-as-code and edge configs for `Visual-Graph-Programming`.
+Everything here is **optional**: VGP's three deployment surfaces (VS Code
+Marketplace, Tauri desktop installers, Unreal plugin distribution) need
+none of it. This exists only if you want to run `backend/`'s MCP/Graph-RAG
+server as a shared, always-on service instead of a per-user local sidecar,
+or to self-host a static docs/site build.
 
-| Directory | Scope | Purpose |
-| --- | --- | --- |
-| [`global/`](global/) | External / public-facing | Deploy & host tooling (docker, k8s, helm, terraform, ansible) |
-| [`private/`](private/) | Internal / developer-only | Local developer tooling |
-| [`cloud/`](cloud/) | Managed cloud hosts | AWS / Azure / Firebase / Serverless configs |
-| [`server/`](server/) | Edge / reverse-proxy | Standalone nginx and Envoy configs |
-
-## global/ (external)
-
-| Directory | What it does |
+| Directory | Purpose |
 | --- | --- |
-| `global/docker/` | Build + run via Docker Compose / Dockerfiles |
-| `global/k8s/` | Kubernetes manifests (base + overlays) |
-| `global/helm/` | Helm charts |
-| `global/terraform/` | Cloud provisioning |
-| `global/ansible/` | Host configuration playbooks |
+| [`docker/`](docker/) | Containerize the optionally-hosted backend (Dockerfile, docker-compose) |
+| [`ansible/`](ansible/) | Provision a bare-metal/VM host for the backend outside the container world |
+| [`terraform/`](terraform/) | Placeholder cloud provisioning (registry, cluster) for the backend — no provider wired up yet |
+| [`nginx/`](nginx/) | Standalone nginx config for serving a static docs/site export |
 
-## cloud/
-
-Managed cloud deploy configs (when present): `aws/`, `azure-pipelines/`, `firebase/`, `serverless/`.
-
-## private/ (internal)
-
-Developer-only experiments (when present).
-
-## server/
-
-| Directory | What it does |
-| --- | --- |
-| `server/nginx/` | Standalone nginx reverse-proxy / static site configs |
-| `server/proxy/` | Envoy proxy configs |
+Pick what you actually need — e.g. `docker/` alone is enough for a local or
+single-host deployment; `ansible/`/`terraform/` only matter once you're
+provisioning real infrastructure for it.

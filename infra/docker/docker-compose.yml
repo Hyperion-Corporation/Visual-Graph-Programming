@@ -1,0 +1,7 @@
+services:
+  backend:
+    build:
+      context: ../..
+      dockerfile: infra/docker/Dockerfile
+    ports:
+      - "8765:8765"

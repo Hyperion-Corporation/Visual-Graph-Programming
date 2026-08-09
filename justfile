@@ -26,6 +26,7 @@ mod build 'tools/build'
 mod ci 'tools/ci'
 mod docs 'tools/docs'
 mod helper 'tools/helper'
+mod infra 'tools/infra'
 mod reducer 'tools/reducer'
 mod test 'tools/test'
 mod validation 'tools/validation'
@@ -60,6 +61,10 @@ help: helper::_print_header
     @echo ""
     @echo -e "{{bold}}Docs{{reset}}"
     @echo "  just build-docs             Build the full VGP documentation site (docs/build_docs.sh)"
+    @echo ""
+    @echo -e "{{bold}}Optional backend (infra/){{reset}}"
+    @echo "  just docker-up              Start the optional backend stack locally"
+    @echo "  just docker-down            Stop the optional backend stack"
     @echo ""
     @echo -e "{{bold}}Agentic LLM Loops (tools/agent/){{reset}}"
     @echo "  just loop-claude             Loop the Claude Code agent on a stateful context"
@@ -140,3 +145,11 @@ clean: helper::_print_header
 # Build the full VGP documentation site
 build-docs: helper::_print_header
     just docs::build
+
+# Start the optional backend stack locally
+docker-up: helper::_print_header
+    just infra::docker-up
+
+# Stop the optional backend stack
+docker-down: helper::_print_header
+    just infra::docker-down

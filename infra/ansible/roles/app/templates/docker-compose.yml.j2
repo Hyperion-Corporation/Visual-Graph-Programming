@@ -1,0 +1,6 @@
+services:
+  backend:
+    image: ghcr.io/acfharbinger/visual-graph-programming-backend:{{ backend_version | default('latest') }}
+    restart: unless-stopped
+    ports:
+      - "8765:8765"
