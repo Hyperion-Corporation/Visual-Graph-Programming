@@ -1,0 +1,30 @@
+{
+    "name": "Visual Graph Programming Dev Environment",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": ".."
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.cpptools",
+                "ms-vscode.cmake-tools",
+                "ms-python.python",
+                "charliermarsh.ruff",
+                "matklad.rust-analyzer",
+                "tauri-apps.tauri-vscode",
+                "dbaeumer.vscode-eslint",
+                "esbenp.prettier-vscode",
+                "editorconfig.editorconfig"
+            ],
+            "settings": {
+                "editor.formatOnSave": true,
+                "[rust]": {
+                    "editor.tabSize": 4
+                }
+            }
+        }
+    },
+    "postCreateCommand": "pixi install && uv sync --all-extras && npm install",
+    "remoteUser": "vscode"
+}
