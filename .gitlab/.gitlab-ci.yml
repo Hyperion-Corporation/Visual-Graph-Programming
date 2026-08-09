@@ -1,0 +1,190 @@
+# GitLab CI/CD Pipeline
+# Equivalent translation of GitHub Actions: ci, docs, release
+# (agent-sync.yml is GitHub-Projects-API-only -- see .forgejo/.gitea's
+# guard-failing equivalent; not ported here since GitLab has no matching
+# workflow_dispatch-triggered job in the .github source to translate).
+
+stages:
+  - test
+  - build
+  - docs
+  - release
+
+variables:
+  GIT_DEPTH: "1"
+
+# ==========================================
+# STAGE: TEST
+# ==========================================
+cpp-base:
+  stage: test
+  image: ghcr.io/prefix-dev/pixi:latest
+  script:
+    - pixi run configure
+    - pixi run build
+    - pixi run test
+  artifacts:
+    when: always
+    paths:
+      - base/build/coverage/
+
+python-backend:
+  stage: test
+  image: python:3.12
+  before_script:
+    - curl -LsSf https://astral.sh/uv/install.sh | sh
+    - export PATH="$HOME/.local/bin:$PATH"
+  script:
+    - uv sync --all-extras
+    - uv run ruff check .
+    - uv run mypy backend
+    - uv run pytest --cov=backend --cov-report=xml
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage.xml
+
+typescript-workspaces:
+  stage: test
+  image: node:20
+  script:
+    - npm ci
+    - npm run lint
+    - npm run check-types
+    - npm run test
+  artifacts:
+    paths:
+      - extension/coverage/
+      - app/coverage/
+
+rust-tauri:
+  stage: test
+  image: rust:latest
+  before_script:
+    - apt-get update && apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libayatana-appindicator3-dev librsvg2-dev
+    - rustup component add clippy rustfmt
+  script:
+    - cargo fmt --check
+    - cargo clippy -- -D warnings
+    - cargo test
+
+# ==========================================
+# STAGE: DOCS
+# ==========================================
+docs-build:
+  stage: docs
+  image: node:20
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+      changes:
+        - "docs/**/*"
+        - "base/**/*"
+        - "backend/**/*"
+        - "extension/**/*"
+        - "app/**/*"
+  before_script:
+    - curl -LsSf https://astral.sh/uv/install.sh | sh
+    - export PATH="$HOME/.local/bin:$PATH"
+    - apt-get update && apt-get install -y python3-pip doxygen
+    - uv sync --group docs
+    - npm ci
+  script:
+    - bash docs/build_docs.sh
+  artifacts:
+    paths:
+      - docs/_build/site/
+
+pages:
+  stage: docs
+  image: alpine:latest
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+      changes:
+        - "docs/**/*"
+  dependencies:
+    - docs-build
+  script:
+    - mv docs/_build/site public
+  artifacts:
+    paths:
+      - public
+
+# ==========================================
+# STAGE: RELEASE
+# ==========================================
+extension-package:
+  stage: release
+  image: node:20
+  rules:
+    - if: '$CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/'
+  script:
+    - npm ci
+    - npm run package:extension
+  artifacts:
+    paths:
+      - extension/*.vsix
+
+app-build-linux:
+  stage: release
+  image: rust:latest
+  rules:
+    - if: '$CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/'
+  before_script:
+    - apt-get update && apt-get install -y nodejs npm libgtk-3-dev libwebkit2gtk-4.1-dev libayatana-appindicator3-dev librsvg2-dev
+    - npm ci
+  script:
+    - npm run build:app -- --workspace=app -- tauri build
+  artifacts:
+    paths:
+      - app/src-tauri/target/release/bundle/
+
+# Windows/macOS app builds need runners tagged accordingly -- GitLab.com's
+# shared macOS runners are a paid tier; self-hosted needs runners tagged
+# `macos`/`windows`. Adjust `tags:` to match your actual runners.
+app-build-macos:
+  stage: release
+  tags:
+    - macos
+  rules:
+    - if: '$CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/'
+  script:
+    - npm ci
+    - npm run build:app -- --workspace=app -- tauri build
+  allow_failure: true # best-effort: depends on a macOS runner being registered
+
+app-build-windows:
+  stage: release
+  tags:
+    - windows
+  rules:
+    - if: '$CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/'
+  script:
+    - npm ci
+    - npm run build:app -- --workspace=app -- tauri build
+  allow_failure: true # best-effort: depends on a Windows runner being registered
+
+# GitLab's native Release feature (equivalent of softprops/action-gh-release)
+# needs the dedicated release-cli image/job shape -- a separate job, not a
+# `release:` block inside the build job itself.
+create-release:
+  stage: release
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  rules:
+    - if: '$CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/'
+  needs:
+    - extension-package
+    - app-build-linux
+  script:
+    - echo "Creating release $CI_COMMIT_TAG"
+  release:
+    tag_name: "$CI_COMMIT_TAG"
+    description: |
+      Release $CI_COMMIT_TAG
+
+      Build artifacts (.vsix, Tauri installers) are attached to the
+      `extension-package` / `app-build-*` jobs for this pipeline -- see
+      ${CI_PROJECT_URL}/-/pipelines/${CI_PIPELINE_ID}.
+
+# Unreal Engine plugin packaging is not automated here -- see the
+# engine-plugin track in moon/ROADMAP.md.

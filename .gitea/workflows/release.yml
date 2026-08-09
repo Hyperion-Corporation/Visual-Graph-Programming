@@ -1,0 +1,89 @@
+name: Release
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  extension-package:
+    name: Package VS Code extension
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install
+        run: npm ci
+
+      - name: Package .vsix
+        run: npm run package:extension
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: vscode-extension
+          path: extension/*.vsix
+
+      # Publishing to the VS Code Marketplace / Open VSX needs a personal
+      # access token stored as a secret. Uncomment once configured.
+      # - name: Publish to VS Code Marketplace
+      #   env:
+      #     VSCE_PAT: ${{ secrets.VSCE_PAT }}
+      #   run: npx vsce publish --packagePath extension/*.vsix
+
+  app-build:
+    name: Build Tauri app
+    strategy:
+      matrix:
+        include:
+          - platform: ubuntu-latest
+          - platform: macos-latest
+          - platform: windows-latest
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Install Linux Tauri/webview dependencies
+        if: matrix.platform == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libayatana-appindicator3-dev librsvg2-dev
+
+      - name: Install
+        run: npm ci
+
+      - name: Build app installers
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          projectPath: app
+          tagName: ${{ github.ref_name }}
+          releaseName: "VGP ${{ github.ref_name }}"
+          releaseDraft: true
+          prerelease: false
+
+      # tauri-action's built-in Release upload targets GitHub's Releases API.
+      # On Forgejo/Gitea, upload the built installers as build artifacts
+      # instead and attach them to a Forgejo/Gitea Release via the REST API
+      # in a follow-up job once tauri-action's output paths are confirmed
+      # for this runner OS.
+
+  # Unreal Engine plugin packaging is not automated yet -- see the
+  # engine-plugin track in moon/ROADMAP.md.

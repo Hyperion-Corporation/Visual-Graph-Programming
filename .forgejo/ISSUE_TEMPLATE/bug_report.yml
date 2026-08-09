@@ -1,0 +1,59 @@
+name: 🐛 Bug Report
+description: Report a defect (structured for humans and coding agents)
+title: "[Bug]: "
+labels: ["bug", "status:triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. Fields below map to our component/priority
+        label taxonomy (see github/config/project_labels.json) so the sync
+        agent can route this ticket without manual re-labeling.
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Affected component
+      options:
+        - "component:graph-engine"
+        - "component:text-sync"
+        - "component:ui-canvas"
+        - "component:lsp-bridge"
+        - "component:cli"
+        - "component:ci-automation"
+        - "component:docs"
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Expected vs actual behavior.
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open a graph with 3+ nested subgraphs
+        2. Toggle text-sync mode
+        3. Observe...
+      render: markdown
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: "OS, VS Code / Tauri app version, commit SHA"
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Paste any stack trace or console output.
+      render: shell

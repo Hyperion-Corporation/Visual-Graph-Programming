@@ -1,0 +1,41 @@
+name: ✨ Feature Request
+description: Propose new functionality
+title: "[Feature]: "
+labels: ["enhancement", "status:triage"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: One or two sentences describing the desired capability.
+      placeholder: "Enable dragging a subgraph selection onto a new tab to fork it into a separate canvas."
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation / Use Case
+      description: Why does this matter? What workflow does it unblock?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Affected component
+      options:
+        - "component:graph-engine"
+        - "component:text-sync"
+        - "component:ui-canvas"
+        - "component:lsp-bridge"
+        - "component:cli"
+        - "component:ci-automation"
+        - "component:docs"
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered

@@ -1,0 +1,64 @@
+name: Docs
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - "base/**"
+      - "backend/**"
+      - "extension/**"
+      - "app/**"
+      - "plugin/**"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: docs-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          version: latest
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Install doc-building dependencies
+        run: |
+          uv sync --group docs
+          npm ci
+
+      - name: Build documentation site
+        run: bash docs/build_docs.sh
+
+      # No GitHub-Pages-equivalent managed deploy action on Forgejo/Gitea
+      # (actions/upload-pages-artifact + actions/deploy-pages use GitHub's
+      # own OIDC Pages deployment API) -- pushes the built site to a
+      # `pages` branch via plain git instead. Whether/how this instance
+      # serves that branch as a website (Forgejo Pages, a separately
+      # configured static host, or not at all) is instance-specific and
+      # not asserted here.
+      - name: Deploy to Pages branch
+        run: |
+          set -euo pipefail
+          AUTH_URL="${GITHUB_SERVER_URL/#https:\/\//https:\/\/x-access-token:${{ secrets.GITHUB_TOKEN }}@}/${GITHUB_REPOSITORY}.git"
+          cd docs/_build/site
+          git init -q -b pages
+          git config user.name "forgejo-actions"
+          git config user.email "actions@noreply.localhost"
+          git add -A
+          git commit -q -m "docs: deploy ${GITHUB_SHA}"
+          git push --force "${AUTH_URL}" HEAD:pages

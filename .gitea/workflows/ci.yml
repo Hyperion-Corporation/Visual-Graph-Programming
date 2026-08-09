@@ -1,0 +1,127 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  cpp-base:
+    name: C++ base (pixi + CMake)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Pixi
+        uses: prefix-dev/setup-pixi@v0.10.0
+        with:
+          pixi-version: latest
+          manifest-path: pixi.toml
+          cache: true
+
+      - name: Configure and build
+        run: |
+          pixi run configure
+          pixi run build
+
+      - name: Test
+        run: pixi run test
+
+      - uses: codecov/codecov-action@v4
+        with:
+          files: base/build/coverage/*.xml
+          flags: base
+          fail_ci_if_error: false
+
+  python-backend:
+    name: Python backend (uv)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: latest
+
+      - name: Sync backend + dev dependencies
+        run: uv sync --all-extras
+
+      - name: Lint (ruff)
+        run: uv run ruff check .
+
+      - name: Type check (mypy)
+        run: uv run mypy backend
+
+      - name: Test (pytest)
+        run: uv run pytest --cov=backend --cov-report=xml
+
+      - uses: codecov/codecov-action@v4
+        with:
+          files: coverage.xml
+          flags: backend
+          fail_ci_if_error: false
+
+  typescript-workspaces:
+    name: extension/ + app/ (npm workspaces)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type check
+        run: npm run check-types
+
+      - name: Test
+        run: npm run test
+
+      - uses: codecov/codecov-action@v4
+        with:
+          files: extension/coverage/lcov.info,app/coverage/lcov.info
+          flags: extension,app
+          fail_ci_if_error: false
+
+  rust-tauri:
+    name: app/src-tauri (Cargo workspace)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+
+      - name: apt dependencies (Tauri/webview)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libayatana-appindicator3-dev librsvg2-dev
+
+      - name: Format check
+        run: cargo fmt --check
+
+      - name: Clippy
+        run: cargo clippy -- -D warnings
+
+      - name: Test
+        run: cargo test
+
+      - uses: codecov/codecov-action@v4
+        with:
+          flags: app
+          fail_ci_if_error: false

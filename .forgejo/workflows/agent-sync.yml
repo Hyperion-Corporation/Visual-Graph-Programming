@@ -1,0 +1,60 @@
+name: Agent Backlog Sync
+
+on:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Why are you running this?"
+        required: false
+        default: "Manual trigger"
+
+concurrency:
+  group: agent-sync-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  sync-backlog:
+    name: Gemini-driven Project Board sync
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      # github/scripts/sync_backlog.py talks to the GitHub Projects (v2)
+      # GraphQL API specifically -- there is no equivalent API surface on
+      # Forgejo/Gitea (their "Projects" feature is a simpler kanban board
+      # with a different, incompatible REST schema), so this job cannot do
+      # anything useful here. Fails fast with a clear message instead of
+      # letting the script run and fail confusingly on GraphQL
+      # auth/schema errors. Porting this to Forgejo/Gitea's Projects API
+      # would need a separate, dedicated script -- out of scope for a CI
+      # config fix.
+      - name: "Guard: this workflow is GitHub-only"
+        run: |
+          echo "::error::Agent Backlog Sync targets the GitHub Projects (v2) GraphQL API and cannot run against a Forgejo/Gitea instance. This workflow is intentionally a no-op here -- see github/scripts/sync_backlog.py."
+          exit 1
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+          cache-dependency-path: pyproject.toml
+
+      - name: Install automation dependencies
+        run: pip install --require-hashes=false -e ".[ci]"
+
+      - name: Run backlog sync
+        env:
+          GITHUB_TOKEN: ${{ secrets.PROJECT_AUTOMATION_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          VGP_PROJECT_ID: ${{ vars.VGP_PROJECT_ID }}
+        run: |
+          python github/scripts/sync_backlog.py \
+            --repo-owner "${{ github.repository_owner }}" \
+            --repo-name "$(basename "${{ github.repository }}")" \
+            --project-id "${VGP_PROJECT_ID}"
