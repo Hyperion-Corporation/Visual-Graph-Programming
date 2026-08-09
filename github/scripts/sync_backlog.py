@@ -277,6 +277,31 @@ def apply_plan(
         logger.info("Ambiguous, flagged for human: %s -- %s", item["description"], item["reason"])
 
 
+def build_board_state(project_id: str) -> tuple[dict[str, Any], dict[int, dict[str, Any]]]:
+    """Fetch the current board and derive both the LLM snapshot and lookup.
+
+    Args:
+        project_id: ``ProjectV2`` node ID.
+
+    Returns:
+        A ``(board_snapshot, issue_lookup)`` tuple: ``board_snapshot`` is a
+        JSON-serializable summary handed to the LLM as context;
+        ``issue_lookup`` maps issue number to ``{"issue_id", "item_id"}``
+        for applying transitions/closes.
+    """
+    items = agent_tools.list_project_items(project_id)
+    board_snapshot = {
+        "items": [
+            {"issue_number": i["issue_number"], "title": i["title"], "state": i["state"]}
+            for i in items
+        ]
+    }
+    issue_lookup = {
+        i["issue_number"]: {"issue_id": i["issue_id"], "item_id": i["item_id"]} for i in items
+    }
+    return board_snapshot, issue_lookup
+
+
 def parse_args() -> argparse.Namespace:
     """Parse command-line arguments.
 
@@ -298,12 +323,14 @@ def main() -> None:
     taxonomy = agent_tools._load_json_config("project_labels.json")
     source_text = load_source_documents(rules)
 
+    board_snapshot, issue_lookup = build_board_state(args.project_id)
+
     client = genai.Client()
     plan = request_plan(
         client=client,
         model=rules["llm"]["model"],
         source_text=source_text,
-        board_snapshot={},  # populated by a board-read helper in a fuller implementation
+        board_snapshot=board_snapshot,
         taxonomy=taxonomy,
     )
 
@@ -319,7 +346,7 @@ def main() -> None:
         repo_owner=args.repo_owner,
         repo_name=args.repo_name,
         project_id=args.project_id,
-        issue_lookup={},  # populated by a board-read helper in a fuller implementation
+        issue_lookup=issue_lookup,
     )
 
 

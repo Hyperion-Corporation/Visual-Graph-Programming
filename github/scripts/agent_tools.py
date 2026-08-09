@@ -322,6 +322,164 @@ def resolve_status_field(
     raise GitHubAPIError("No 'Status' single-select field found on project")
 
 
+def resolve_project_id(
+    owner: str, number: int, client: GitHubProjectClient | None = None
+) -> str:
+    """Resolve a ``ProjectV2`` node ID from its human-facing owner + number.
+
+    GitHub's GraphQL schema exposes ``ProjectV2Owner`` polymorphically as
+    either a ``user`` or an ``organization`` root, so both are queried and
+    whichever resolves is used.
+
+    Args:
+        owner: Login of the project owner (user or organization).
+        number: The ``ProjectV2`` number shown in its URL (e.g. the ``1``
+            in ``.../users/ACFHarbinger/projects/1``).
+        client: Optional injected client for testing.
+
+    Returns:
+        The ``ProjectV2`` node ID.
+
+    Raises:
+        GitHubAPIError: If neither a user nor an organization named
+            ``owner`` has a project numbered ``number``.
+    """
+    client = client or get_client()
+    query = """
+    query($owner: String!, $number: Int!) {
+      user(login: $owner) { projectV2(number: $number) { id } }
+      organization(login: $owner) { projectV2(number: $number) { id } }
+    }
+    """
+    data = client.execute(query, {"owner": owner, "number": number})
+    project = (data.get("organization") or {}).get("projectV2") or (
+        data.get("user") or {}
+    ).get("projectV2")
+    if project is None:
+        raise GitHubAPIError(f"Could not resolve ProjectV2 #{number} for owner {owner!r}")
+    return project["id"]
+
+
+def find_issue_node_id(
+    repo_owner: str, repo_name: str, issue_number: int, client: GitHubProjectClient | None = None
+) -> str:
+    """Resolve an issue's GraphQL node ID from its human-facing number.
+
+    Args:
+        repo_owner: GitHub org or user that owns the repository.
+        repo_name: Repository name.
+        issue_number: The GitHub issue number (e.g. 42 for issue "#42").
+        client: Optional injected client for testing.
+
+    Returns:
+        The issue's node ID.
+
+    Raises:
+        GitHubAPIError: If no such issue exists in the repository.
+    """
+    client = client or get_client()
+    query = """
+    query($owner: String!, $name: String!, $number: Int!) {
+      repository(owner: $owner, name: $name) {
+        issue(number: $number) { id }
+      }
+    }
+    """
+    data = client.execute(query, {"owner": repo_owner, "name": repo_name, "number": issue_number})
+    issue = data["repository"]["issue"]
+    if issue is None:
+        raise GitHubAPIError(f"Issue #{issue_number} not found in {repo_owner}/{repo_name}")
+    return issue["id"]
+
+
+def add_item_to_project(
+    project_id: str, content_node_id: str, client: GitHubProjectClient | None = None
+) -> str:
+    """Add an existing issue (or PR) to a ``ProjectV2`` board.
+
+    Idempotent: calling this again for an issue already on the board
+    returns the existing item's ID rather than duplicating it.
+
+    Args:
+        project_id: ``ProjectV2`` node ID.
+        content_node_id: Node ID of the issue/PR to add.
+        client: Optional injected client for testing.
+
+    Returns:
+        The ``ProjectV2Item`` node ID.
+    """
+    client = client or get_client()
+    mutation = """
+    mutation($projectId: ID!, $contentId: ID!) {
+      addProjectV2ItemById(input: { projectId: $projectId, contentId: $contentId }) {
+        item { id }
+      }
+    }
+    """
+    data = client.execute(mutation, {"projectId": project_id, "contentId": content_node_id})
+    return data["addProjectV2ItemById"]["item"]["id"]
+
+
+def list_project_items(
+    project_id: str, client: GitHubProjectClient | None = None
+) -> list[dict[str, Any]]:
+    """List every item currently on a ``ProjectV2`` board.
+
+    Used to build both the LLM's board-state context and the
+    issue-number -> node-ID lookup table needed to apply transitions/closes
+    against existing tickets.
+
+    Args:
+        project_id: ``ProjectV2`` node ID.
+        client: Optional injected client for testing.
+
+    Returns:
+        A list of dicts, one per board item, each with ``item_id``,
+        ``issue_id``, ``issue_number``, ``title``, and ``state`` (issue
+        items only -- non-issue content, e.g. draft items, is skipped).
+    """
+    client = client or get_client()
+    query = """
+    query($projectId: ID!, $after: String) {
+      node(id: $projectId) {
+        ... on ProjectV2 {
+          items(first: 100, after: $after) {
+            pageInfo { hasNextPage endCursor }
+            nodes {
+              id
+              content {
+                ... on Issue { id number title state }
+              }
+            }
+          }
+        }
+      }
+    }
+    """
+    items: list[dict[str, Any]] = []
+    after: str | None = None
+    while True:
+        data = client.execute(query, {"projectId": project_id, "after": after})
+        page = data["node"]["items"]
+        for node in page["nodes"]:
+            content = node.get("content")
+            if not content or "number" not in content:
+                continue  # skip draft items / PRs without an issue number
+            items.append(
+                {
+                    "item_id": node["id"],
+                    "issue_id": content["id"],
+                    "issue_number": content["number"],
+                    "title": content["title"],
+                    "state": content["state"],
+                }
+            )
+        if not page["pageInfo"]["hasNextPage"]:
+            break
+        after = page["pageInfo"]["endCursor"]
+    return items
+
+
 def _validated_labels(component: str, priority: str) -> list[str]:
     """Validate a component/priority pair against ``project_labels.json``.
 

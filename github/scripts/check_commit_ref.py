@@ -19,6 +19,7 @@ import argparse
 import logging
 import os
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -63,6 +64,30 @@ def extract_issue_number(message: str, patterns: list[re.Pattern[str]]) -> int |
     return None
 
 
+def resolve_repo_slug() -> tuple[str, str] | None:
+    """Resolve ``(owner, name)`` from ``GITHUB_REPOSITORY`` or the git remote.
+
+    Returns:
+        A ``(owner, name)`` tuple, or ``None`` if neither source resolves
+        (e.g. no ``origin`` remote, or it's not a GitHub URL).
+    """
+    env_repo = os.environ.get("GITHUB_REPOSITORY", "")
+    if "/" in env_repo:
+        owner, _, name = env_repo.partition("/")
+        return owner, name
+
+    try:
+        url = subprocess.run(
+            ["git", "remote", "get-url", "origin"],
+            capture_output=True, text=True, check=True, cwd=REPO_ROOT,
+        ).stdout.strip()
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return None
+
+    match = re.search(r"github\.com[:/]([^/]+)/([^/.]+?)(?:\.git)?$", url)
+    return (match.group(1), match.group(2)) if match else None
+
+
 def update_board_best_effort(issue_number: int, project_id: str) -> None:
     """Attempt to move the referenced issue to ``status:in-progress``.
 
@@ -73,14 +98,31 @@ def update_board_best_effort(issue_number: int, project_id: str) -> None:
         project_id: ``ProjectV2`` node ID to update.
     """
     try:
+        repo_slug = resolve_repo_slug()
+        if repo_slug is None:
+            logger.warning("Could not resolve owner/repo (no GITHUB_REPOSITORY, no origin remote); skipping")
+            return
+        owner, name = repo_slug
+
         status_options = agent_tools.resolve_status_field(project_id)
-        logger.info(
-            "Would transition issue #%s to In Progress on project %s "
-            "(item-id lookup omitted in the local-hook fast path)",
-            issue_number,
-            project_id,
+        option_id = status_options.get("status:in-progress")
+        if not option_id:
+            logger.warning("'status:in-progress' is not a valid Status option; skipping")
+            return
+
+        issue_node_id = agent_tools.find_issue_node_id(owner, name, issue_number)
+        # Idempotent: returns the existing item if the issue is already on
+        # the board, adds it otherwise -- either way we get an item_id to
+        # transition.
+        item_id = agent_tools.add_item_to_project(project_id, issue_node_id)
+        agent_tools.transition_ticket(
+            project_id=project_id,
+            item_id=item_id,
+            status_field_id=status_options["__field_id__"],
+            status_option_id=option_id,
+            new_status="status:in-progress",
         )
-        _ = status_options  # resolved eagerly to fail fast on auth/config issues
+        logger.info("Transitioned issue #%s to status:in-progress on project %s", issue_number, project_id)
     except Exception:  # noqa: BLE001 - fail-open by design, see module docstring
         logger.exception("Board update failed (non-blocking); continuing")
 
