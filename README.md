@@ -431,3 +431,12 @@ This project is dual-licensed under an open-core model:
   can't comply with the AGPL's obligations, a paid
   [commercial license](LICENSE.txt) is available — contact ACFHarbinger
   <afonso.fernandes100@gmail.com> for pricing and terms.
+
+## Infrastructure layout
+
+Optional deploy and edge configs live under [`infra/`](infra/README.md):
+
+- `infra/global/` — external deploy/host tooling
+- `infra/cloud/` — managed cloud host configs
+- `infra/private/` — developer-only tooling
+- `infra/server/` — nginx and Envoy reverse-proxy configs
